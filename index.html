@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Kalika | Royal Family Restaurant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        theme: {
+                            maroon: '#4A0404',  /* Classic Template Red */
+                            gold: '#C5A059',    /* Template Gold */
+                            cream: '#F5F5DC',   /* Background */
+                            dark: '#1a0505',    /* Dark Mode BG */
+                            black: '#000000'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['"Playfair Display"', 'serif'],
+                        script: ['"Great Vibes"', 'cursive'],
+                        body: ['"Lato"', 'sans-serif']
+                    },
+                    backgroundImage: {
+                        'pattern': "url('https://www.transparenttextures.com/patterns/black-linen.png')"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Template Specific Ribbon Navigation */
+        .ribbon-nav {
+            background: linear-gradient(to bottom, #D4AF37 0%, #C5A059 100%);
+            border-top: 1px solid #FFF;
+            border-bottom: 4px solid #8B6914;
+        }
+        
+        .logo-badge {
+            background: #4A0404;
+            border: 2px solid #C5A059;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: background 0.3s;
+        }
+        
+        /* Dark Mode Overrides for Logo Badge */
+        .dark .logo-badge {
+            background: #000000;
+            border-color: #D4AF37;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #C5A059;
+        }
+
+        /* Card Image Sizing */
+        .card-img-container {
+            height: 16rem;
+            overflow: hidden;
+        }
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .group:hover .card-img {
+            transform: scale(1.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #2C0202; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-theme-cream dark:bg-theme-black text-gray-800 dark:text-gray-200 font-body transition-colors duration-300">
+
+    <header class="relative z-50">
+        <div class="bg-theme-maroon dark:bg-theme-dark text-theme-gold py-2 border-b border-theme-gold/30 transition-colors duration-300">
+            <div class="container mx-auto px-4 flex justify-between items-center text-sm">
+                <span class="font-bold tracking-widest"><i class="fa-solid fa-clock-rotate-left mr-2"></i> ESTD 2010</span>
+                
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="hover:text-white transition">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button onclick="toggleAdmin()" class="hover:text-white transition uppercase text-xs font-bold">Admin</button>
+                    <span class="hidden md:inline"><i class="fa-solid fa-phone"></i> +91 6394892575</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+                 class="w-full h-full object-cover opacity-90" alt="Indian Food">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent"></div>
+
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 z-20">
+                <div class="logo-badge p-8 md:p-10 rounded-b-full text-center w-72 md:w-80 shadow-2xl">
+                    <i class="fa-solid fa-crown text-4xl text-theme-gold mb-2"></i>
+                    <h1 class="font-heading text-3xl md:text-4xl text-white font-bold tracking-wider mb-1">HOTEL KALIKA</h1>
+                    <p class="font-script text-theme-gold text-xl">The Family Restaurant</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="ribbon-nav shadow-lg sticky top-0 z-40">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap justify-center md:justify-between items-center py-3 md:py-0">
+                    <div class="hidden md:flex space-x-1">
+                        <a href="#home" class="px-6 py-4 text-theme-maroon font-bold uppercase hover:bg-white/20 transition">Home</a>
+                        <a href="#menu" class="px-6 py-4 text-theme-maroon font-bold uppercase hover:bg-white/20 transition">Menu</a>
+                        <a href="#parties" class="px-6 py-4 text-theme-maroon font-bold uppercase hover:bg-white/20 transition">Parties</a>
+                        <a href="#locations" class="px-6 py-4 text-theme-maroon font-bold uppercase hover:bg-white/20 transition">Branches</a>
+                    </div>
+                    
+                    <div class="md:hidden w-full flex justify-between px-4 items-center">
+                        <span class="text-theme-maroon font-bold uppercase">Menu</span>
+                        <button onclick="document.getElementById('mobile-nav').classList.toggle('hidden')" class="text-theme-maroon text-2xl">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                    </div>
+
+                    <button onclick="toggleCart()" class="bg-theme-maroon dark:bg-black text-theme-gold px-6 py-2 rounded-full font-bold uppercase text-sm border-2 border-theme-gold hover:bg-white hover:text-theme-maroon transition mx-4 my-2 md:my-0 shadow-lg">
+                        <i class="fa-solid fa-basket-shopping mr-2"></i> Cart (<span id="cart-count">0</span>)
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-nav" class="hidden md:hidden bg-theme-gold border-t border-theme-maroon">
+                <a href="#menu" class="block px-4 py-2 text-theme-maroon font-bold border-b border-theme-maroon/20">Menu</a>
+                <a href="#parties" class="block px-4 py-2 text-theme-maroon font-bold border-b border-theme-maroon/20">Parties</a>
+                <a href="#locations" class="block px-4 py-2 text-theme-maroon font-bold">Branches</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="container mx-auto px-4 -mt-10 relative z-30 grid md:grid-cols-3 gap-6 mb-20">
+        <div class="bg-theme-maroon dark:bg-black border-2 border-theme-gold p-6 text-center transform hover:-translate-y-2 transition duration-300 shadow-xl">
+            <div class="h-40 overflow-hidden mb-4 border border-theme-gold">
+                <img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-heading text-2xl text-theme-gold mb-2">Full Menu</h3>
+            <p class="text-sm text-gray-300 mb-4">Explore our legendary Handi Mutton, Chicken curries, and Tandoori specials.</p>
+            <a href="#menu" class="text-white border-b border-theme-gold uppercase text-xs font-bold tracking-widest pb-1 hover:text-theme-gold">Order Now</a>
+        </div>
+        
+        <div class="bg-theme-gold border-2 border-theme-maroon dark:border-white p-6 text-center transform hover:-translate-y-2 transition duration-300 shadow-xl">
+            <div class="h-40 overflow-hidden mb-4 border border-theme-maroon">
+                <img src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?w=500" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-heading text-2xl text-theme-maroon mb-2">Fast Delivery</h3>
+            <p class="text-sm text-theme-maroon mb-4 font-bold">Hot and fresh food delivered straight to your doorstep in Varanasi.</p>
+            <a href="#menu" class="text-theme-maroon border-b border-theme-maroon uppercase text-xs font-bold tracking-widest pb-1 hover:text-white">Order Online</a>
+        </div>
+
+        <div class="bg-theme-maroon dark:bg-black border-2 border-theme-gold p-6 text-center transform hover:-translate-y-2 transition duration-300 shadow-xl">
+            <div class="h-40 overflow-hidden mb-4 border border-theme-gold">
+                <img src="https://images.unsplash.com/photo-1606659892699-b57008779698?w=500" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-heading text-2xl text-theme-gold mb-2">Our Secrets</h3>
+            <p class="text-sm text-gray-300 mb-4">Learn the secret behind our slow-cooked Handi Mutton.</p>
+            <a href="#blog" class="text-white border-b border-theme-gold uppercase text-xs font-bold tracking-widest pb-1 hover:text-theme-gold">Read More</a>
+        </div>
+    </section>
+
+    <section id="menu" class="py-16 bg-white dark:bg-theme-dark relative transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="font-script text-4xl text-theme-maroon dark:text-theme-gold">Delicious</span>
+                <h2 class="font-heading text-5xl font-bold text-theme-maroon dark:text-white mt-2 section-title">FULL MENU</h2>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-2 mb-10">
+                <button onclick="filterMenu('all')" class="menu-tab active px-6 py-2 border border-theme-maroon dark:border-theme-gold text-theme-maroon dark:text-theme-gold font-bold uppercase text-xs tracking-widest transition rounded-full hover:bg-theme-maroon hover:text-white">All</button>
+                <button onclick="filterMenu('kalika-special')" class="menu-tab px-6 py-2 border border-theme-maroon dark:border-theme-gold text-theme-maroon dark:text-theme-gold font-bold uppercase text-xs tracking-widest transition rounded-full hover:bg-theme-maroon hover:text-white">Specials</button>
+                <button onclick="filterMenu('kings-non-veg')" class="menu-tab px-6 py-2 border border-theme-maroon dark:border-theme-gold text-theme-maroon dark:text-theme-gold font-bold uppercase text-xs tracking-widest transition rounded-full hover:bg-theme-maroon hover:text-white">Chicken</button>
+                <button onclick="filterMenu('mutton')" class="menu-tab px-6 py-2 border border-theme-maroon dark:border-theme-gold text-theme-maroon dark:text-theme-gold font-bold uppercase text-xs tracking-widest transition rounded-full hover:bg-theme-maroon hover:text-white">Mutton</button>
+                <button onclick="filterMenu('tandoor')" class="menu-tab px-6 py-2 border border-theme-maroon dark:border-theme-gold text-theme-maroon dark:text-theme-gold font-bold uppercase text-xs tracking-widest transition rounded-full hover:bg-theme-maroon hover:text-white">Tandoor</button>
+                <button onclick="filterMenu('breads')" class="menu-tab px-6 py-2 border border-theme-maroon dark:border-theme-gold text-theme-maroon dark:text-theme-gold font-bold uppercase text-xs tracking-widest transition rounded-full hover:bg-theme-maroon hover:text-white">Breads</button>
+                <button onclick="filterMenu('veg')" class="menu-tab px-6 py-2 border border-theme-maroon dark:border-theme-gold text-theme-maroon dark:text-theme-gold font-bold uppercase text-xs tracking-widest transition rounded-full hover:bg-theme-maroon hover:text-white">Veg</button>
+                <button onclick="filterMenu('chinese')" class="menu-tab px-6 py-2 border border-theme-maroon dark:border-theme-gold text-theme-maroon dark:text-theme-gold font-bold uppercase text-xs tracking-widest transition rounded-full hover:bg-theme-maroon hover:text-white">Chinese</button>
+            </div>
+
+            <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+        </div>
+    </section>
+
+    <section id="parties" class="py-20 bg-theme-cream dark:bg-black border-t border-theme-gold transition-colors duration-300 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/damask.png')]"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center border-4 border-double border-theme-gold p-8 md:p-16 bg-white dark:bg-theme-dark shadow-2xl">
+                <i class="fa-solid fa-champagne-glasses text-6xl text-theme-maroon dark:text-theme-gold mb-6"></i>
+                <h2 class="font-heading text-4xl md:text-6xl text-theme-maroon dark:text-white mb-8">Celebrate Royalty with Us</h2>
+                <p class="text-gray-700 dark:text-gray-300 text-lg md:text-xl leading-loose font-body mb-10">
+                    Hosting a celebration is an art, and at Hotel Kalika, we are the maestros. Whether it is the union of two souls in a grand <strong>Marriage ceremony</strong>, the joyous milestone of a <strong>Birthday</strong>, or a prestigious Corporate gathering, our venue provides the perfect backdrop of luxury and tradition. We specialize in bulk catering, ensuring that every guest—whether you have 50 or 500—tastes the same authentic, slow-cooked perfection that defines our brand. Our dedicated event managers work closely with you to customize menus, featuring our signature Handi Mutton and Deshi Murga, ensuring your special day is etched in memory forever. We offer exclusive discounts on bulk orders and a premium dining arrangement that treats your guests like royalty.
+                </p>
+                <a href="https://wa.me/916394892575?text=Inquiry%20for%20Party%20Booking" target="_blank" class="inline-block bg-theme-maroon text-theme-gold px-12 py-4 font-bold uppercase tracking-[0.2em] hover:bg-theme-gold hover:text-theme-maroon transition shadow-lg text-sm">
+                    Inquire Availability
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="py-16 bg-white dark:bg-theme-dark border-t-4 border-theme-maroon transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <h3 class="font-heading text-4xl text-center text-theme-maroon dark:text-theme-gold mb-16">Stories from Our Kitchen</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-theme-cream dark:bg-black border border-theme-gold p-4 shadow-lg group hover:-translate-y-2 transition duration-300">
+                    <div class="card-img-container rounded mb-4 border border-theme-maroon/20">
+                        <img src="handi.jpg" class="card-img" alt="Handi Mutton Pot">
+                    </div>
+                    <h4 class="font-heading text-xl text-theme-maroon dark:text-white mb-2">The Handi Tradition</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Cooking in clay or heavy brass pots ('Handi') is an ancient Indian art. The porous nature allows heat to circulate evenly.</p>
+                </div>
+                <div class="bg-theme-cream dark:bg-black border border-theme-gold p-4 shadow-lg group hover:-translate-y-2 transition duration-300">
+                    <div class="card-img-container rounded mb-4 border border-theme-maroon/20">
+                        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500" class="card-img">
+                    </div>
+                    <h4 class="font-heading text-xl text-theme-maroon dark:text-white mb-2">The Art of Spices</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">We don't use machine-ground powder. Our chefs use the 'Sil-Batta' to crush whole spices, releasing fresh oils.</p>
+                </div>
+                <div class="bg-theme-cream dark:bg-black border border-theme-gold p-4 shadow-lg group hover:-translate-y-2 transition duration-300">
+                    <div class="card-img-container rounded mb-4 border border-theme-maroon/20">
+                         <img src="handimutton.jpg" class="card-img" alt="Mutton">
+                    </div>
+                    <h4 class="font-heading text-xl text-theme-maroon dark:text-white mb-2">Handi Mutton</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Our signature dish. The meat marinates for 6 hours in yogurt and secret 'Khada Masala' before being slow-cooked over a wood fire.</p>
+                </div>
+                <div class="bg-theme-cream dark:bg-black border border-theme-gold p-4 shadow-lg group hover:-translate-y-2 transition duration-300">
+                    <div class="card-img-container rounded mb-4 border border-theme-maroon/20">
+                        <img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500" class="card-img" alt="Chicken">
+                    </div>
+                    <h4 class="font-heading text-xl text-theme-maroon dark:text-white mb-2">Handi Chicken</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Sealed with dough to trap steam ('Dum'), this dish cooks in its own juices, creating a succulent texture.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="py-16 bg-white dark:bg-theme-dark border-t border-theme-gold">
+        <div class="container mx-auto px-4">
+            <h2 class="font-heading text-4xl text-center text-theme-maroon dark:text-theme-gold mb-10">What Our Guests Say</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-6 border-2 border-theme-gold rounded-tl-3xl rounded-br-3xl bg-theme-cream dark:bg-black">
+                    <div class="flex text-yellow-500 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="italic text-gray-700 dark:text-gray-300 mb-4">"The Handi Mutton at Kalika is unparalleled in Varanasi. The meat simply falls off the bone. A must-visit!"</p>
+                    <h4 class="font-bold text-theme-maroon dark:text-white">- Rahul Singh</h4>
+                </div>
+                <div class="p-6 border-2 border-theme-gold rounded-tl-3xl rounded-br-3xl bg-theme-cream dark:bg-black">
+                    <div class="flex text-yellow-500 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="italic text-gray-700 dark:text-gray-300 mb-4">"We celebrated my daughter's birthday here. The management was excellent and the Deshi Murga was delicious."</p>
+                    <h4 class="font-bold text-theme-maroon dark:text-white">- Anjali Verma</h4>
+                </div>
+                <div class="p-6 border-2 border-theme-gold rounded-tl-3xl rounded-br-3xl bg-theme-cream dark:bg-black">
+                    <div class="flex text-yellow-500 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                    <p class="italic text-gray-700 dark:text-gray-300 mb-4">"Authentic taste of Purvanchal. The spices are perfect, not too hot but full of flavor. Best Tandoori Chicken in town."</p>
+                    <h4 class="font-bold text-theme-maroon dark:text-white">- Amit Yadav</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="locations" class="py-16 bg-theme-maroon text-white relative">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')]"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="font-heading text-4xl text-center text-theme-gold mb-12">Our Branches</h2>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                
+                <div class="p-6 border border-theme-gold/30 rounded hover:bg-black/30 transition">
+                    <i class="fa-solid fa-utensils text-4xl text-theme-gold mb-4"></i>
+                    <h3 class="font-heading text-2xl mb-2">Mahmoorganj</h3>
+                    <p class="text-sm opacity-80 mb-2">Opposite Radio Station, Mahmoorganj</p>
+                    <p class="font-bold text-theme-gold">Full Service Dining</p>
+                </div>
+                <div class="p-6 border border-theme-gold/30 rounded hover:bg-black/30 transition">
+                    <i class="fa-solid fa-bowl-food text-4xl text-theme-gold mb-4"></i>
+                    <h3 class="font-heading text-2xl mb-2">Nadesar</h3>
+                    <p class="text-sm opacity-80 mb-2">Near Taj Hotel, Nadesar, Varanasi</p>
+                    <p class="font-bold text-theme-gold">Luxury Experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-center py-10 border-t-8 border-theme-gold text-white transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <h2 class="font-heading text-3xl text-theme-gold mb-2">HOTEL KALIKA</h2>
+            <div class="flex justify-center gap-6 my-6 text-theme-gold">
+                <i class="fa-brands fa-facebook text-2xl cursor-pointer hover:text-white"></i>
+                <i class="fa-brands fa-instagram text-2xl cursor-pointer hover:text-white"></i>
+                <i class="fa-brands fa-whatsapp text-2xl cursor-pointer hover:text-white"></i>
+            </div>
+            <p class="text-gray-400 text-sm">© 2026 Hotel Kalika. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="fixed bottom-6 left-6 z-50 flex flex-col gap-3">
+        <a href="tel:+916394892575" class="w-14 h-14 bg-white text-theme-maroon rounded-full flex items-center justify-center shadow-lg border-2 border-theme-maroon hover:scale-110 transition animate-bounce"><i class="fa-solid fa-phone text-2xl"></i></a>
+        <a href="https://wa.me/916394892575" class="w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg border-2 border-white hover:scale-110 transition"><i class="fa-brands fa-whatsapp text-3xl"></i></a>
+    </div>
+
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-white dark:bg-theme-dark shadow-2xl transform translate-x-full transition-transform duration-300 z-[60] flex flex-col border-l-4 border-theme-maroon">
+        <div class="bg-theme-maroon text-theme-gold p-4 flex justify-between items-center">
+            <h3 class="font-heading text-lg font-bold">Your Order</h3>
+            <button onclick="toggleCart()"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-2 bg-theme-cream dark:bg-black"></div>
+        <div class="p-4 border-t border-theme-gold bg-white dark:bg-theme-dark">
+            <div class="flex justify-between font-bold text-xl mb-4 text-theme-maroon dark:text-theme-gold">
+                <span>Total:</span> <span id="cart-total">₹0</span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-green-600 text-white font-bold py-3 rounded hover:bg-green-700 transition uppercase tracking-widest text-sm">
+                <i class="fa-brands fa-whatsapp mr-2"></i> Order Now
+            </button>
+        </div>
+    </div>
+
+    <div id="admin-modal" class="fixed inset-0 bg-black/90 z-[70] hidden flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white dark:bg-theme-dark rounded w-full max-w-sm overflow-hidden border-2 border-theme-gold">
+            <div class="bg-theme-maroon p-4 text-theme-gold font-bold flex justify-between">
+                <span>Admin Panel</span>
+                <button onclick="toggleAdmin()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6">
+                <div id="login-form">
+                    <input type="password" id="admin-pass" placeholder="Password" class="w-full bg-gray-100 dark:bg-black border p-2 mb-4 rounded text-center dark:text-white">
+                    <button onclick="login()" class="w-full bg-theme-maroon text-white font-bold py-2 rounded hover:bg-theme-gold hover:text-theme-maroon">LOGIN</button>
+                </div>
+                <div id="admin-panel" class="hidden">
+                    <p class="text-xs mb-2 font-bold uppercase text-center text-gray-500 dark:text-gray-400">Update Prices</p>
+                    <div id="price-list" class="max-h-60 overflow-y-auto pr-2 space-y-2 mb-4"></div>
+                    <button onclick="saveChanges()" class="w-full bg-green-600 text-white font-bold py-2 rounded">SAVE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- COMPLETE DIGITIZED MENU DATA (UPDATED IMAGES) ---
+        const menuData = [
+            // KALIKA SPECIAL (Weight-Wise Added)
+            // USED image_4.png for MUTTON items
+            {id:12, name:"Kalika Handi Mutton (250g)", price:275, cat:"kalika-special", img:"handimutton.jpg"},
+            {id:901, name:"Kalika Handi Mutton (500g)", price:500, cat:"kalika-special", img:"handimutton.jpg"},
+            {id:902, name:"Kalika Handi Mutton (1kg)", price:1000, cat:"kalika-special", img:"handimutton.jpg"},
+            
+            {id:13, name:"Kalika Handi Chicken (250g)", price:180, cat:"kalika-special", img:"handichicken.jpg"},
+            {id:903, name:"Kalika Handi Chicken (500g)", price:350, cat:"kalika-special", img:"handichicken.jpg"},
+            {id:904, name:"Kalika Handi Chicken (1kg)", price:700, cat:"kalika-special", img:"handichicken.jpg"},
+
+            // USED image_4.png for MUTTON items
+            {id:10, name:"Mutton Shami Kabab (1 Pc)", price:65, cat:"kalika-special", img:"muttonshami.jpg"},
+            {id:1, name:"Mutton Curry (2 Pc)", price:160, cat:"kalika-special", img:"mutton.jpg"},
+            {id:11, name:"Mutton Chusta", price:140, cat:"kalika-special", img:"chusta.jpg"},
+
+            {id:2, name:"Chicken Curry (2 Pc)", price:140, cat:"kalika-special", img:"ccury.jpg"},
+            {id:3, name:"Deshi Murga (2 Pc)", price:250, cat:"kalika-special", img:"https://images.unsplash.com/photo-1606728035253-49e8a23146de?w=500"},
+            {id:4, name:"Fish Curry (2 Pc)", price:160, cat:"kalika-special", img:"fish.jpg"},
+            {id:5, name:"Egg Curry (2 Pc)", price:85, cat:"kalika-special", img:"eggcury.jpg"},
+            {id:6, name:"Kaleji (4 Pc)", price:160, cat:"kalika-special", img:"kalegi.jpg"},
+            {id:7, name:"Keema Kaleji", price:160, cat:"kalika-special", img:"https://images.unsplash.com/photo-1545247181-516773cae754?w=500"},
+            {id:8, name:"Fish Fry (1 Pc)", price:60, cat:"kalika-special", img:"fry.jpg"},
+            {id:9, name:"Machali Muda", price:140, cat:"kalika-special", img:"machali.jpg"},
+
+            // INDIAN KINGS NON VEG
+            {id:11, name:"Chicken Do Pyaja", price:175, cat:"kings-non-veg", img:"dopyaza.jpg"},
+            {id:12, name:"Butter Chicken", price:320, cat:"kings-non-veg", img:"butterchi.jpg"},
+            {id:13, name:"Kadhai Chicken", price:175, cat:"kings-non-veg", img:"kadaic.jpg"},
+            {id:14, name:"Chicken Tikka Masala", price:580, cat:"kings-non-veg", img:"ct.jpg"},
+            {id:204, name:"Tawa Chicken", price:175, cat:"kings-non-veg", img:"tawa.jpg"},
+            {id:205, name:"Rana Chicken", price:175, cat:"kings-non-veg", img:"rc.jpg"},
+            {id:206, name:"Chicken Lajawab", price:320, cat:"kings-non-veg", img:"cl.jpg"},
+            {id:208, name:"Butter Chicken Masala", price:340, cat:"kings-non-veg", img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500"},
+            {id:209, name:"Chicken Kali Mirch", price:340, cat:"kings-non-veg", img:"ck.jpg"},
+            {id:210, name:"Kashmiri Chicken", price:320, cat:"kings-non-veg", img:"kc.jpg"},
+            {id:212, name:"Amritsari Chicken", price:340, cat:"kings-non-veg", img:"amritsaric.jpg"},
+            {id:213, name:"Chicken Hyderabadi", price:340, cat:"kings-non-veg", img:"hc.jpg"},
+            {id:214, name:"Changezi Chicken", price:340, cat:"kings-non-veg", img:"cc.jpg"},
+
+            // TANDOOR
+            {id:20, name:"Tandoori Chicken (Half)", price:190, cat:"tandoor", img:"tandooric.jpg"},
+            {id:302, name:"Afghani Chicken (Half)", price:200, cat:"tandoor", img:"ac.jpg"},
+            {id:21, name:"Chicken Tikka", price:140, cat:"tandoor", img:"chickentikka.jpg"},
+            {id:304, name:"Chicken Malai Tikka", price:150, cat:"tandoor", img:"malai.jpg"},
+            {id:305, name:"Chicken Afghani Tikka", price:160, cat:"tandoor", img:"afghanic.jpg"},
+            {id:306, name:"Tangri Kabab", price:150, cat:"tandoor", img:"tangdi.jpg"},
+            {id:22, name:"Chicken Seek Kabab", price:140, cat:"tandoor", img:"chickenseekh.jpg"},
+            {id:308, name:"Chicken Hariyali Tikka", price:140, cat:"tandoor", img:"haryalichicken.jpg"},
+            {id:309, name:"Chicken Hara Bhara Kabab", price:150, cat:"tandoor", img:"hara.jpg"},
+            {id:23, name:"Paneer Tikka", price:130, cat:"tandoor", img:"paneertikka.jpg"},
+            {id:311, name:"Paneer Malai Tikka", price:140, cat:"tandoor", img:"malaipaneer.jpg"},
+            {id:312, name:"Paneer Hariyali Tikka", price:130, cat:"tandoor", img:"haryalipaneer.jpg"},
+
+            // VEG
+            {id:30, name:"Dal Fry", price:80, cat:"veg", img:"dal.jpg"},
+            {id:402, name:"Dal Tadka", price:90, cat:"veg", img:"tadka.jpg"},
+            {id:31, name:"Shahi Paneer", price:140, cat:"veg", img:"tadka.jpg"},
+            {id:404, name:"Kadhai Paneer", price:140, cat:"veg", img:"kadaipaneer.jpg"},
+            {id:405, name:"Paneer Butter Masala", price:140, cat:"veg", img:"paneerbutter.jpg"},
+            {id:406, name:"Malai Kofta", price:140, cat:"veg", img:"malaikofta.jpg"},
+            {id:407, name:"Mix Veg", price:110, cat:"veg", img:"mixveg.jpg"},
+            {id:408, name:"Aloo Jeera", price:90, cat:"veg", img:"alo.jpg"},
+            {id:409, name:"Paneer Do Pyaja", price:140, cat:"veg", img:"pando.jpg"},
+            {id:410, name:"Mushroom Masala", price:140, cat:"veg", img:"mushroom.jpg"},
+
+            // BREADS
+            {id:32, name:"Butter Naan", price:40, cat:"breads", img:"nan.jpg"},
+            {id:501, name:"Tawa Roti Plain", price:10, cat:"breads", img:"tawaroti.jpg"},
+            {id:502, name:"Tawa Roti Butter", price:12, cat:"breads", img:"trb.jpg"},
+            {id:503, name:"Tandoori Roti Plain", price:12, cat:"breads", img:"tandooriroti.jpg"},
+            {id:33, name:"Tandoori Roti Butter", price:15, cat:"breads", img:"trbutter.jpg"},
+            {id:505, name:"Plain Naan", price:30, cat:"breads", img:"nan.jpg"},
+            {id:507, name:"Missi Roti", price:35, cat:"breads", img:"mr.jpg"},
+            {id:508, name:"Lachha Paratha", price:35, cat:"breads", img:"laccha.jpg"},
+            
+            // RICE & BIRYANI
+            {id:34, name:"Jeera Rice", price:70, cat:"veg", img:"https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?w=500"},
+            {id:550, name:"Chicken Biryani (Half)", price:80, cat:"kings-non-veg", img:"cb.jpg"},
+            {id:551, name:"Chicken Biryani (Full)", price:120, cat:"kings-non-veg", img:"cb.jpg"},
+            // USED image_4.png for MUTTON items
+            {id:552, name:"Mutton Biryani (Half)", price:100, cat:"mutton", img:"mb.jpg"},
+            {id:553, name:"Mutton Biryani (Full)", price:140, cat:"mutton", img:"mb.jpg"},
+            {id:555, name:"Plain Rice", price:60, cat:"veg", img:"rice.jpg"},
+
+            // CHINESE
+            {id:40, name:"Chicken Chowmein", price:120, cat:"chinese", img:"https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500"},
+            {id:602, name:"Chicken Fried Rice", price:130, cat:"chinese", img:"fried.jpg"},
+            {id:41, name:"Chicken Chilli", price:140, cat:"chinese", img:"chilli.jpg"},
+            {id:604, name:"Veg Manchurian", price:110, cat:"chinese", img:"vegman.jpg"},
+            {id:605, name:"Chicken Manchow Soup", price:100, cat:"soup-snacks", img:"https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500"},
+            {id:606, name:"Veg Chowmein", price:80, cat:"chinese", img:"index.html/vegc.jpg"},
+
+            // SNACKS
+            {id:701, name:"Roasted Papad", price:15, cat:"soup-snacks", img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500"},
+            {id:702, name:"Masala Papad", price:30, cat:"soup-snacks", img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500"},
+            {id:703, name:"Paneer Pakoda", price:150, cat:"soup-snacks", img:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=500"},
+            {id:704, name:"Veg Pakoda", price:120, cat:"soup-snacks", img:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=500"}
+        ];
+
+        let cart = [];
+
+        // Load Saved Data
+        const savedData = localStorage.getItem('kalikaPrices');
+        if(savedData) {
+            const prices = JSON.parse(savedData);
+            menuData.forEach(item => {
+                if(prices[item.id]) item.price = prices[item.id];
+            });
+        }
+
+        // Initialize
+        function init() {
+            filterMenu('all');
+            
+            // Check Theme
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-toggle').innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+        }
+
+        // Theme Toggle
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const html = document.documentElement;
+            if(html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('theme-toggle').innerHTML = '<i class="fa-solid fa-moon"></i>';
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('theme-toggle').innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+        });
+
+        // Filter Menu
+        function filterMenu(cat) {
+            document.querySelectorAll('.menu-tab').forEach(btn => {
+                btn.classList.remove('active', 'bg-theme-maroon', 'text-theme-gold');
+                btn.classList.add('hover:bg-theme-maroon', 'hover:text-white');
+            });
+            event.target.classList.add('active', 'bg-theme-maroon', 'text-theme-gold');
+
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = menuData.filter(i => cat === 'all' || i.cat === cat).map(item => `
+                <div class="menu-card bg-white dark:bg-theme-dark border border-gray-200 dark:border-theme-gold/30 rounded-lg overflow-hidden hover:shadow-2xl transition duration-300 group">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-theme-maroon/10 group-hover:bg-transparent transition"></div>
+                    </div>
+                    <div class="p-4 text-center">
+                        <h4 class="font-heading font-bold text-theme-maroon dark:text-white text-lg truncate mb-2">${item.name}</h4>
+                        <div class="w-8 h-0.5 bg-theme-gold mx-auto my-2"></div>
+                        <p class="text-xl font-bold text-gray-800 dark:text-theme-gold mb-3">₹${item.price}</p>
+                        <button onclick="addToCart(${item.id})" class="w-full bg-theme-maroon dark:bg-theme-gold text-white dark:text-theme-maroon text-xs font-bold uppercase py-2 hover:bg-theme-gold dark:hover:bg-white transition">Add to Plate</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Cart Functions
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
+        }
+
+        function addToCart(id) {
+            const item = menuData.find(i => i.id === id);
+            const exists = cart.find(i => i.id === id);
+            if(exists) exists.qty++;
+            else cart.push({...item, qty: 1});
+            renderCart();
+            toggleCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            let total = 0;
+            container.innerHTML = cart.map((item, i) => {
+                total += item.price * item.qty;
+                return `
+                    <div class="flex justify-between items-center bg-white dark:bg-theme-maroon/20 p-2 rounded shadow-sm border border-theme-gold/30">
+                        <div>
+                            <p class="font-bold text-sm text-theme-maroon dark:text-theme-gold">${item.name}</p>
+                            <p class="text-xs dark:text-gray-300">₹${item.price} x ${item.qty}</p>
+                        </div>
+                        <div class="flex gap-2 items-center">
+                            <button onclick="updateQty(${i}, -1)" class="bg-gray-200 dark:bg-gray-700 px-2 rounded font-bold dark:text-white">-</button>
+                            <span class="text-sm font-bold dark:text-white">${item.qty}</span>
+                            <button onclick="updateQty(${i}, 1)" class="bg-theme-gold text-white px-2 rounded font-bold">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('cart-total').innerText = '₹' + total;
+            document.getElementById('cart-count').innerText = cart.reduce((a,b)=>a+b.qty,0);
+        }
+
+        function updateQty(i, change) {
+            cart[i].qty += change;
+            if(cart[i].qty <= 0) cart.splice(i, 1);
+            renderCart();
+        }
+
+        function checkout() {
+            if(cart.length === 0) return alert("Please add items first.");
+            let msg = "Namaste Hotel Kalika! My Order:%0A";
+            let total = 0;
+            cart.forEach(i => {
+                msg += `▪ ${i.name} (x${i.qty}) - ₹${i.price * i.qty}%0A`;
+                total += i.price * i.qty;
+            });
+            msg += `%0A*Total Bill: ₹${total}*`;
+            window.open(`https://wa.me/916394892575?text=${msg}`, '_blank');
+        }
+
+        // Admin Functions
+        function toggleAdmin() {
+            document.getElementById('admin-modal').classList.toggle('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+            document.getElementById('admin-pass').value = '';
+        }
+
+        function login() {
+            if(document.getElementById('admin-pass').value === 'kalika@123') {
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                const list = document.getElementById('price-list');
+                list.innerHTML = menuData.map(item => `
+                    <div class="flex justify-between items-center bg-gray-50 dark:bg-theme-maroon/20 p-2 border dark:border-theme-gold/20 rounded">
+                        <span class="text-xs font-bold w-1/2 truncate dark:text-white">${item.name}</span>
+                        <input type="number" id="price-${item.id}" value="${item.price}" class="w-16 border text-right p-1 rounded dark:bg-theme-dark dark:text-white dark:border-theme-gold">
+                    </div>
+                `).join('');
+            } else {
+                alert("Wrong Password");
+            }
+        }
+
+        function saveChanges() {
+            const prices = {};
+            menuData.forEach(item => {
+                const val = parseInt(document.getElementById(`price-${item.id}`).value);
+                if(val > 0) {
+                    item.price = val;
+                    prices[item.id] = val;
+                }
+            });
+            localStorage.setItem('kalikaPrices', JSON.stringify(prices));
+            alert("Prices Updated!");
+            toggleAdmin();
+            filterMenu('all');
+        }
+
+        init();
+    </script>
+</body>
+</html>
